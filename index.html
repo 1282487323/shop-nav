@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>希音店铺导航</title>
+<style>
+  :root{
+    --bg:#f5f6f8; --card:#ffffff; --ink:#1f2329; --sub:#8a9099;
+    --line:#ebedf0; --accent:#ff5b2e; --accent2:#ff8a3d;
+    --grp:#fff3ee; --grpink:#ff5b2e;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+       background:var(--bg);color:var(--ink);font-size:15px;line-height:1.5}
+  .top{position:sticky;top:0;z-index:20;background:linear-gradient(135deg,var(--accent),var(--accent2));
+       color:#fff;padding:14px 16px 12px;box-shadow:0 2px 10px rgba(255,91,46,.25)}
+  .top h1{margin:0;font-size:19px;display:flex;align-items:center;gap:8px}
+  .top .sub{font-size:12px;opacity:.9;margin-top:2px}
+  .bar{display:flex;gap:8px;margin-top:10px;align-items:center}
+  .search{flex:1;display:flex;align-items:center;background:rgba(255,255,255,.95);border-radius:20px;padding:7px 12px;color:#333}
+  .search input{border:0;outline:0;background:transparent;flex:1;font-size:14px;color:#1f2329}
+  .btn{border:0;border-radius:20px;padding:7px 13px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+  .btn-ghost{background:rgba(255,255,255,.22);color:#fff}
+  .btn-ghost.on{background:#fff;color:var(--accent)}
+  .wrap{max-width:760px;margin:0 auto;padding:14px 12px 60px}
+  .grp{background:var(--card);border-radius:14px;margin-bottom:14px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+  .grp-head{background:var(--grp);display:flex;align-items:center;gap:8px;padding:11px 14px;
+            border-left:4px solid var(--grpink)}
+  .grp-head .gname{font-weight:700;font-size:16px;flex:1}
+  .grp-head .cnt{font-size:12px;color:var(--sub);background:#fff;padding:1px 9px;border-radius:10px}
+  .grp-head .mini{border:0;background:rgba(255,91,46,.12);color:var(--accent);border-radius:12px;
+                 padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer}
+  .grp-head .del{border:0;background:rgba(0,0,0,.06);color:#888;border-radius:12px;padding:4px 9px;font-size:12px;cursor:pointer}
+  .g-handle{display:none;align-items:center;color:var(--accent);font-size:18px;padding-right:4px;cursor:grab;touch-action:none}
+  .s-handle{display:none;align-items:center;justify-content:center;color:#c4c8ce;font-size:16px;width:22px;flex-shrink:0;cursor:grab;touch-action:none}
+  .manage .g-handle,.manage .s-handle{display:flex}
+  .sortable-ghost{opacity:.25}
+  .sortable-chosen{box-shadow:0 2px 12px rgba(255,91,46,.3);border-radius:10px}
+  .list{padding:6px 8px 10px;min-height:8px}
+  .item{display:flex;align-items:center;gap:10px;padding:11px 10px;border-bottom:1px solid var(--line);text-decoration:none;color:inherit}
+  .item:last-child{border-bottom:0}
+  .item .ic{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));
+            color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+  .item .info{flex:1;min-width:0}
+  .item .nm{font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .item .nt{font-size:12px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .item .arrow{color:#c4c8ce;font-size:18px;flex-shrink:0}
+  .item .ops{display:none;gap:6px;flex-shrink:0}
+  .manage .item .ops{display:flex}
+  .ops button{border:0;background:#f0f1f3;border-radius:8px;padding:6px 9px;font-size:12px;cursor:pointer}
+  .ops .e{color:#3a7afe}.ops .d{color:#ff4d4f}
+  .empty{color:var(--sub);text-align:center;padding:18px;font-size:13px}
+  .mask{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
+  .mask.show{display:flex}
+  .modal{background:#fff;border-radius:16px;width:100%;max-width:420px;padding:18px}
+  .modal h3{margin:0 0 14px;font-size:17px}
+  .field{margin-bottom:12px}
+  .field label{display:block;font-size:13px;color:var(--sub);margin-bottom:5px}
+  .field input{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:15px;outline:0}
+  .field input:focus{border-color:var(--accent)}
+  .modal .actions{display:flex;gap:10px;margin-top:6px}
+  .modal .actions .btn{flex:1;padding:11px;border-radius:10px}
+  .primary{background:var(--accent);color:#fff}
+  .secondary{background:#f0f1f3;color:#444}
+  .foot{text-align:center;color:var(--sub);font-size:12px;padding:10px 0 0}
+  .toast{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.8);color:#fff;
+         padding:10px 18px;border-radius:10px;font-size:14px;z-index:99;display:none}
+</style>
+</head>
+<body>
+<div class="top">
+  <h1>🏪 希音店铺导航</h1>
+  <div class="bar">
+    <div class="search">🔍<input id="q" placeholder="搜索店名 / 备注…" oninput="render()"></div>
+    <button class="btn btn-ghost" id="addGrpBtn" onclick="requireAdmin(showGroup)">＋组别</button>
+    <button class="btn btn-ghost" id="mgBtn" onclick="requireAdmin(toggleManage)">✎管理</button>
+    <button class="btn btn-ghost" id="logoutBtn" onclick="logout()" style="display:none">退出</button>
+  </div>
+</div>
+<div class="wrap" id="wrap"></div>
+<div class="toast" id="toast"></div>
+
+<div class="mask" id="mask">
+  <div class="modal">
+    <h3 id="mTitle">添加</h3>
+    <div class="field">
+      <label id="lbl1">名称</label>
+      <input id="inp1" placeholder="">
+    </div>
+    <div class="field" id="fld2">
+      <label id="lbl2">金山文档链接</label>
+      <input id="inp2" placeholder="https://www.kdocs.cn/l/...">
+    </div>
+    <div class="actions">
+      <button class="btn secondary" onclick="closeModal()">取消</button>
+      <button class="btn primary" id="mSave" onclick="saveModal()">保存</button>
+    </div>
+  </div>
+</div>
+
+<div class="mask" id="loginMask">
+  <div class="modal">
+    <h3>管理员登录</h3>
+    <div class="field"><label>账号</label><input id="admUser" placeholder="admin"></div>
+    <div class="field"><label>密码</label><input id="admPass" type="password" placeholder="请输入密码"></div>
+    <div class="actions">
+      <button class="btn secondary" onclick="closeLogin()">取消</button>
+      <button class="btn primary" onclick="doLogin()">登录</button>
+    </div>
+  </div>
+</div>
+
+<script src="sortable.min.js"></script>
+<script>
+const STORE_KEY = "xiyin_shop_nav_v1";
+const BASE_DATA = {"order": ["一组", "二组"], "groups": {"一组": [{"name": "希音1店·马根生", "url": "https://www.kdocs.cn/l/cpSkwXxVTzRe", "num": 1, "note": "马根生"}, {"name": "希音3店·ML", "url": "https://www.kdocs.cn/l/cka9d9eozsxU", "num": 3, "note": "ML"}, {"name": "希音4店·杨晨", "url": "https://www.kdocs.cn/l/cgAwxxNDuylJ", "num": 4, "note": "杨晨"}, {"name": "希音7店·唐伟卓", "url": "https://www.kdocs.cn/l/cbVsGra6Phyl", "num": 7, "note": "唐伟卓"}, {"name": "希音8店·张坤", "url": "https://www.kdocs.cn/l/cr2frcLgGjng", "num": 8, "note": "张坤"}, {"name": "希音9店·沃尔玛加拿大", "url": "https://www.kdocs.cn/l/ckLua0Zz9G4m", "num": 9, "note": "沃尔玛加拿大"}, {"name": "希音10店·马迪", "url": "https://www.kdocs.cn/l/ciUBR4z9LusN", "num": 10, "note": "马迪"}, {"name": "希音11店·王振", "url": "https://www.kdocs.cn/l/ckeYPbLIkH4e", "num": 11, "note": "王振"}, {"name": "希音12店·买家辉", "url": "https://www.kdocs.cn/l/ch9NJkDeRd0l", "num": 12, "note": "买家辉"}, {"name": "希音13店·杨画", "url": "https://www.kdocs.cn/l/ciXodJMq9VPt", "num": 13, "note": "杨画"}, {"name": "希音14店", "url": "https://www.kdocs.cn/l/cpYtgEmez9hf", "num": 14, "note": ""}, {"name": "希音15店", "url": "https://www.kdocs.cn/l/cj5CEeNhiG0p", "num": 15, "note": ""}, {"name": "希音16店", "url": "https://www.kdocs.cn/l/cuNpE3BT8t5E", "num": 16, "note": ""}, {"name": "希音17店", "url": "https://www.kdocs.cn/l/cdIrztAyE9sZ", "num": 17, "note": ""}, {"name": "希音18店", "url": "https://www.kdocs.cn/l/cpTJQJ5tNbXs", "num": 18, "note": ""}], "二组": [{"name": "希音二组1店·丹天奇", "url": "https://www.kdocs.cn/l/cbtvar83NZSd", "num": 1, "note": "丹天奇"}, {"name": "希音二组2店·武晋超", "url": "https://www.kdocs.cn/l/cl5KHCsZ54Bi", "num": 2, "note": "武晋超"}, {"name": "希音二组3店·王家赛", "url": "https://www.kdocs.cn/l/csQPvzjPfzv6", "num": 3, "note": "王家赛"}, {"name": "希音二组4店·王才仲", "url": "https://www.kdocs.cn/l/cjKm4rXEkWBE", "num": 4, "note": "王才仲"}, {"name": "希音二组5店·聂坤坤", "url": "https://www.kdocs.cn/l/csDcFPslpAca", "num": 5, "note": "聂坤坤"}, {"name": "希音二组6店·高金英tk", "url": "https://www.kdocs.cn/l/ckddW3xfNSFA", "num": 6, "note": "高金英tk"}, {"name": "希音二组7店·小磊tk", "url": "https://www.kdocs.cn/l/ckHuH8VvFHH4", "num": 7, "note": "小磊tk"}, {"name": "希音二组8店·马天", "url": "https://www.kdocs.cn/l/crqEvNOM3Sq4", "num": 8, "note": "马天"}, {"name": "希音二组9店·唐佳明", "url": "https://www.kdocs.cn/l/cbWJGBZp9t1B", "num": 9, "note": "唐佳明"}, {"name": "希音二组10店", "url": "https://www.kdocs.cn/l/cvmWqpmYgBxz", "num": 10, "note": ""}]}};
+
+let data = load();
+let manage = false;
+let editCtx = null;
+
+/* ---- 管理员登录（加组别 / 管理 需先登录）---- */
+const ADMIN_USER = 'admin';       // ← 修改管理员账号：改这里
+const ADMIN_PASS = '123456';      // ← 修改管理员密码：改这里
+let isAdmin = false;
+let adminCb = null;
+if(sessionStorage.getItem('xy_admin') === '1'){ isAdmin = true; document.getElementById('logoutBtn').style.display = ''; }
+
+function requireAdmin(cb){
+  if(isAdmin){ cb(); return; }
+  adminCb = cb;
+  document.getElementById('admUser').value = '';
+  document.getElementById('admPass').value = '';
+  document.getElementById('loginMask').classList.add('show');
+  document.getElementById('admUser').focus();
+}
+function closeLogin(){ document.getElementById('loginMask').classList.remove('show'); adminCb = null; }
+function doLogin(){
+  const u = document.getElementById('admUser').value.trim();
+  const p = document.getElementById('admPass').value;
+  if(u === ADMIN_USER && p === ADMIN_PASS){
+    isAdmin = true;
+    sessionStorage.setItem('xy_admin', '1');
+    document.getElementById('logoutBtn').style.display = '';
+    closeLogin();
+    if(adminCb) adminCb();
+  }else{ toast('账号或密码错误'); }
+}
+function logout(){
+  isAdmin = false;
+  sessionStorage.removeItem('xy_admin');
+  document.getElementById('logoutBtn').style.display = 'none';
+  if(manage) toggleManage();
+  render();
+  toast('已退出管理员');
+}
+document.getElementById('loginMask').addEventListener('click', e=>{ if(e.target === document.getElementById('loginMask')) closeLogin(); });
+document.getElementById('admUser').addEventListener('keydown', e=>{ if(e.key === 'Enter') document.getElementById('admPass').focus(); });
+document.getElementById('admPass').addEventListener('keydown', e=>{ if(e.key === 'Enter') doLogin(); }); // {type:'group'|'shop', group, idx}
+
+function load(){
+  try{
+    const s = localStorage.getItem(STORE_KEY);
+    if(s) return JSON.parse(s);
+  }catch(e){}
+  return JSON.parse(JSON.stringify(BASE_DATA));
+}
+function save(){ localStorage.setItem(STORE_KEY, JSON.stringify(data)); }
+
+function toast(msg){
+  const t=document.getElementById('toast'); t.textContent=msg; t.style.display='block';
+  clearTimeout(t._t); t._t=setTimeout(()=>t.style.display='none',1400);
+}
+
+function sortGroup(g){
+  (data.groups[g]||[]).sort((a,b)=>(a.num||999)-(b.num||999) || a.name.localeCompare(b.name,'zh'));
+}
+
+function render(){
+  const q=(document.getElementById('q').value||'').trim().toLowerCase();
+  const wrap=document.getElementById('wrap'); wrap.innerHTML='';
+  document.body.classList.toggle('manage',manage);
+  if(data.order.length===0){
+    wrap.innerHTML='<div class="empty">还没有组别，点右上角「＋组别」添加</div>'; return;
+  }
+  data.order.forEach(g=>{
+    const shops=data.groups[g]||[];
+    const filtered = q ? shops.filter(s=>(s.name+' '+s.note).toLowerCase().includes(q)) : shops;
+    const sec=document.createElement('div'); sec.className='grp'; sec.dataset.group=g;
+    let head=`<div class="grp-head"><div class="g-handle">≡</div><span class="gname">${esc(g)}</span>`+
+      `<span class="cnt">${shops.length}家</span>`;
+    if(manage){
+      head+=`<button class="mini" onclick="showShop('${esc(g)}')">＋店铺</button>`+
+            `<button class="del" onclick="delGroup('${esc(g)}')">删除</button>`;
+    }
+    head+='</div>';
+    let bodyHtml=`<div class="list" data-group="${esc(g)}">`;
+    if(filtered.length===0){
+      bodyHtml+='<div class="empty">'+(q?'无匹配':'空组别，点「＋店铺」添加')+'</div>';
+    }else{
+      filtered.forEach((s)=>{
+        const dnum = s.num!=null?(''+s.num):'';
+        const u = esc(s.url);
+        bodyHtml+=`<a class="item" href="${u}" target="_blank" rel="noopener" data-url="${u}">`+
+          `<div class="s-handle">≡</div>`+
+          `<div class="ic">${dnum||'·'}</div>`+
+          `<div class="info"><div class="nm">${esc(s.name)}</div>`+
+          (s.note?`<div class="nt">${esc(s.note)}</div>`:'')+`</div>`+
+          (manage?`<div class="ops"><button class="e" onclick="event.preventDefault();editShop('${esc(g)}','${u}')">✎</button>`+
+                   `<button class="d" onclick="event.preventDefault();delShop('${esc(g)}','${u}')">🗑</button></div>`:'')+
+          `<div class="arrow">›</div></a>`;
+      });
+    }
+    bodyHtml+='</div>';
+    sec.innerHTML=head+bodyHtml;
+    wrap.appendChild(sec);
+  });
+  const f=document.createElement('div'); f.className='foot';
+  f.innerHTML='数据保存在本机浏览器 · 加组别 / 管理需管理员登录 · 管理模式下可拖拽 ≡ 手柄排序';
+  wrap.appendChild(f);
+  if(manage && !q){ initSortables(); } else { destroySortables(); }
+}
+
+function esc(s){ return (''+s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+/* ---- 拖拽排序（仅管理模式下、无搜索时）---- */
+let sortables = [];
+function destroySortables(){
+  sortables.forEach(s=>{ try{ s.destroy(); }catch(e){} });
+  sortables = [];
+}
+function initSortables(){
+  destroySortables();
+  if(typeof Sortable === 'undefined') return;
+  const wrap = document.getElementById('wrap');
+  sortables.push(new Sortable(wrap, {
+    draggable:'.grp', handle:'.g-handle', animation:150, forceFallback:true,
+    onEnd: function(){ syncGroupsFromDOM(); save(); }
+  }));
+  document.querySelectorAll('.list').forEach(list=>{
+    const g = list.getAttribute('data-group');
+    sortables.push(new Sortable(list, {
+      draggable:'.item', handle:'.s-handle', animation:150, forceFallback:true,
+      onEnd: function(evt){ syncShopsFromDOM(g, evt.from); save(); }
+    }));
+  });
+}
+function syncGroupsFromDOM(){
+  const wrap = document.getElementById('wrap');
+  const newOrder = []; const newGroups = {};
+  wrap.querySelectorAll('.grp').forEach(sec=>{
+    const g = sec.getAttribute('data-group');
+    if(g){ newOrder.push(g); newGroups[g] = data.groups[g]; }
+  });
+  data.order = newOrder; data.groups = newGroups;
+}
+function syncShopsFromDOM(g, listEl){
+  const list = listEl || document.querySelector('.list[data-group="'+g+'"]');
+  if(!list) return;
+  const map = {}; (data.groups[g]||[]).forEach(s=>{ map[s.url]=s; });
+  const urls = Array.from(list.querySelectorAll('.item')).map(it=>it.getAttribute('data-url'));
+  data.groups[g] = urls.map(u=>map[u]).filter(Boolean);
+}
+
+function toggleManage(){
+  manage=!manage;
+  document.getElementById('mgBtn').classList.toggle('on',manage);
+  render();
+}
+
+/* ---- modal ---- */
+const mask=document.getElementById('mask');
+function showGroup(){
+  editCtx={type:'group'};
+  document.getElementById('mTitle').textContent='添加组别';
+  document.getElementById('lbl1').textContent='组别名称（如：三组）';
+  document.getElementById('inp1').value=''; document.getElementById('inp1').placeholder='三组';
+  document.getElementById('fld2').style.display='none';
+  document.getElementById('inp1').focus();
+  mask.classList.add('show');
+}
+function showShop(g){
+  editCtx={type:'shop',group:g};
+  document.getElementById('mTitle').textContent='添加店铺';
+  document.getElementById('lbl1').textContent='店铺名称（如：希音20店·张三）';
+  document.getElementById('inp1').value=''; document.getElementById('inp1').placeholder='希音20店·张三';
+  document.getElementById('fld2').style.display='block';
+  document.getElementById('inp2').value='';
+  document.getElementById('inp2').placeholder='https://www.kdocs.cn/l/...';
+  document.getElementById('inp1').focus();
+  mask.classList.add('show');
+}
+function editShop(g,url){
+  const i=data.groups[g].findIndex(s=>s.url===url);
+  if(i<0) return;
+  const s=data.groups[g][i];
+  editCtx={type:'shop',group:g,idx:i};
+  document.getElementById('mTitle').textContent='编辑店铺';
+  document.getElementById('lbl1').textContent='店铺名称';
+  document.getElementById('inp1').value=s.name;
+  document.getElementById('fld2').style.display='block';
+  document.getElementById('inp2').value=s.url;
+  mask.classList.add('show');
+}
+function closeModal(){ mask.classList.remove('show'); editCtx=null; }
+
+function numFromName(n){
+  const m=(n||'').match(/(\d+)/); return m?parseInt(m[1],10):999;
+}
+function saveModal(){
+  const v1=document.getElementById('inp1').value.trim();
+  if(!v1){ toast('请填写名称'); return; }
+  if(editCtx.type==='group'){
+    if(data.order.includes(v1)){ toast('组别已存在'); return; }
+    data.order.push(v1); data.groups[v1]=[]; save(); closeModal(); render();
+    toast('已添加组别'); return;
+  }
+  const v2=document.getElementById('inp2').value.trim();
+  if(!/^https?:\/\//.test(v2)){ toast('链接需以 http(s):// 开头'); return; }
+  const grp=editCtx.group;
+  const rec={name:v1,url:v2,num:numFromName(v1),note:''};
+  if(editCtx.idx!=null){ data.groups[grp][editCtx.idx]=rec; }
+  else { data.groups[grp].push(rec); }
+  sortGroup(grp); save(); closeModal(); render();
+  toast(editCtx.idx!=null?'已更新':'已添加店铺');
+}
+function delShop(g,url){
+  const i=data.groups[g].findIndex(s=>s.url===url);
+  if(i<0) return;
+  if(!confirm('确定删除该店铺？')) return;
+  data.groups[g].splice(i,1); save(); render(); toast('已删除');
+}
+function delGroup(g){
+  if(!confirm('删除组别「'+g+'」及其下所有店铺？')) return;
+  delete data.groups[g];
+  data.order=data.order.filter(x=>x!==g); save(); render(); toast('已删除组别');
+}
+mask.addEventListener('click',e=>{ if(e.target===mask) closeModal(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+
+render();
+</script>
+</body>
+</html>
