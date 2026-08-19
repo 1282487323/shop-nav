@@ -315,6 +315,7 @@ body.dark .cal-card{background:rgba(255,255,255,.06);border-color:rgba(255,255,2
 body.dark .cal-fest{color:#ff7875}
 body.dark .cal-fest.term{color:rgba(255,255,255,.55)}
 body.dark .cal-cell.sm.has-fest::after{background:#ff7875}
+.wxic{width:30px;height:30px;flex:none}
 </style>
 </head>
 <body>
@@ -328,20 +329,20 @@ body.dark .cal-cell.sm.has-fest::after{background:#ff7875}
   <h1>希音店铺导航</h1>
   <div class="bar">
     <div class="search"><input id="q" placeholder="搜索店名 / 链接 / 备注 / 分组…" oninput="render()"></div>
-    <button class="btn btn-ghost" id="favBtn" onclick="toggleFavOnly()">⭐收藏</button>
-    <button class="btn btn-ghost" id="themeBtn" onclick="toggleTheme()">🌙</button>
-    <button class="btn btn-ghost" id="compactBtn" onclick="toggleCompact()">📐精简</button>
-    <button class="btn btn-ghost" id="installBtn" onclick="installApp()" style="display:none" title="安装到桌面（App）">📲安装</button>
-    <button class="btn btn-ghost" id="mgBtn" onclick="requireToken(toggleManage)">✎管理</button>
+    <button class="btn btn-ghost" id="favBtn" onclick="toggleFavOnly()">收藏</button>
+    <button class="btn btn-ghost" id="themeBtn" onclick="toggleTheme()">夜间</button>
+    <button class="btn btn-ghost" id="compactBtn" onclick="toggleCompact()">精简</button>
+    <button class="btn btn-ghost" id="installBtn" onclick="installApp()" style="display:none" title="安装到桌面（App）">安装</button>
+    <button class="btn btn-ghost" id="mgBtn" onclick="requireToken(toggleManage)">管理</button>
     <button class="btn btn-ghost" id="addGrpBtn" onclick="requireToken(showGroup)" style="display:none">＋组别</button>
-    <button class="btn btn-ghost" id="bakBtn" onclick="openBackup()" style="display:none">📦备份</button>
-    <button class="btn btn-ghost" id="trashBtn" onclick="openTrash()" style="display:none">🗑️回收站</button>
-    <button class="btn btn-ghost" id="tokBtn" onclick="setToken()" style="display:none">🔑Token</button>
-    <button class="btn btn-ghost" id="saveBtn" onclick="save()" style="display:none">💾保存</button>
+    <button class="btn btn-ghost" id="bakBtn" onclick="openBackup()" style="display:none">备份</button>
+    <button class="btn btn-ghost" id="trashBtn" onclick="openTrash()" style="display:none">回收站</button>
+    <button class="btn btn-ghost" id="tokBtn" onclick="setToken()" style="display:none">Token</button>
+    <button class="btn btn-ghost" id="saveBtn" onclick="save()" style="display:none">保存</button>
     <button class="btn btn-ghost" id="logoutBtn" onclick="logout()" style="display:none">清除Token</button>
   </div>
 </div>
-<div class="wcard" id="wxCard" onclick="openWx()" title="点击设置城市 / 重新定位"><span class="wemo">🌤</span><span class="wdesc">点此设置天气</span></div>
+<div class="wcard" id="wxCard" onclick="openWx()" title="点击设置城市 / 重新定位"><span class="wemo"><svg viewBox="0 0 24 24" class="wxic"><path d="M7 18.6a4.3 4.3 0 0 1 .4-8.5A5 5 0 0 1 17 9.9a3.7 3.7 0 0 1 .2 8.7H7z" fill="#94a3b8"/></svg></span><span class="wdesc">点此设置天气</span></div>
 <div class="whourly" id="wxHourly"></div>
 <div class="wrap" id="wrap"></div>
 <div class="toast" id="toast"></div>
@@ -370,10 +371,10 @@ body.dark .cal-cell.sm.has-fest::after{background:#ff7875}
 <div class="mask" id="bakMask">
   <div class="modal">
     <h3>数据备份</h3>
-    <p style="font-size:12px;color:var(--sub);margin:0 0 4px">导出当前数据到本地文件；导入文件将覆盖当前页面（需点 💾 保存才上传）。</p>
+    <p style="font-size:12px;color:var(--sub);margin:0 0 4px">导出当前数据到本地文件；导入文件将覆盖当前页面（需点保存才上传）。</p>
     <div class="bak-row">
-      <button class="btn primary" onclick="exportData()">⬇ 导出</button>
-      <label class="btn" style="background:rgba(var(--acR),var(--acG),var(--acB),.14);color:var(--accent)">⬆ 导入<input id="bakFile" type="file" accept="application/json,.json" style="display:none" onchange="if(this.files[0])importData(this.files[0])"></label>
+      <button class="btn primary" onclick="exportData()">导出</button>
+      <label class="btn" style="background:rgba(var(--acR),var(--acG),var(--acB),.14);color:var(--accent)">导入<input id="bakFile" type="file" accept="application/json,.json" style="display:none" onchange="if(this.files[0])importData(this.files[0])"></label>
     </div>
     <div class="actions" style="margin-top:12px">
       <button class="btn secondary" onclick="closeBackup()">关闭</button>
@@ -394,12 +395,12 @@ body.dark .cal-cell.sm.has-fest::after{background:#ff7875}
 
 <div class="mask" id="wxMask">
   <div class="modal" style="max-width:360px">
-    <h3>🌤 设置天气位置</h3>
+    <h3>设置天气位置</h3>
     <p style="font-size:12px;color:var(--sub);margin:0 0 10px">支持省 / 市 / 区县搜索（如 焦作、博爱县、朝阳区），点选即定；也可「自动定位」用当前位置。</p>
     <div class="field"><label>搜索</label><input id="wxSearch" class="wx-inp" placeholder="如：博爱县 / 焦作 / 杭州" oninput="wxSearchInput()" autocomplete="off"></div>
     <div id="wxResults" class="wx-results"></div>
     <div class="actions">
-      <button class="btn secondary" onclick="wxLocate()">📍 自动定位</button>
+      <button class="btn secondary" onclick="wxLocate()">自动定位</button>
       <button class="btn secondary" onclick="closeWx()">取消</button>
     </div>
   </div>
@@ -407,7 +408,7 @@ body.dark .cal-cell.sm.has-fest::after{background:#ff7875}
 
 <div class="mask" id="calMask" onclick="if(event.target===this)closeCal()">
   <div class="modal" style="max-width:820px;width:100%">
-    <h3>📅 日历</h3>
+    <h3>日历</h3>
     <div id="calBody"></div>
     <div class="actions" style="margin-top:14px"><button class="btn secondary" onclick="closeCal()">关闭</button></div>
   </div>
@@ -420,8 +421,8 @@ const GH_OWNER  = '1282487323';        // ← GitHub 用户名
 const GH_REPO   = 'shop-nav';          // ← 仓库名
 const GH_BRANCH = 'main';              // ← 分支名（GitHub Pages 所用分支）
 const GH_FILE   = 'shops.json';        // ← 数据文件名（仓库根目录）
-let GH_TOKEN = localStorage.getItem('xy_ghtoken') || '';  // ← 管理员在页面点🔑粘贴一次 GitHub 写入Token，存本机浏览器，不进仓库、不公开
-let dirty = false;  // 是否有未上传的本地草稿改动（仅点💾才上传 GitHub）
+let GH_TOKEN = localStorage.getItem('xy_ghtoken') || '';  // ← 管理员在页面点Token粘贴一次 GitHub 写入Token，存本机浏览器，不进仓库、不公开
+let dirty = false;  // 是否有未上传的本地草稿改动（仅点保存才上传 GitHub）
 const READ_URL  = `https://cdn.jsdelivr.net/gh/${GH_OWNER}/${GH_REPO}@${GH_BRANCH}/${GH_FILE}`;
 const API_URL   = `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${GH_FILE}`;
 
@@ -511,7 +512,7 @@ async function load(){
   render();
 }
 async function save(){
-  if(!GH_TOKEN){ toast('请先点右上角🔑Token 粘贴写入令牌'); return; }
+  if(!GH_TOKEN){ toast('请先点右上角Token 粘贴写入令牌'); return; }
   try{
     data._v = Date.now();   // 写入版本号，供自动轮询判断“谁更新”
     const head = await fetch(API_URL, {headers:{'Authorization':'Bearer '+GH_TOKEN}});
@@ -523,7 +524,7 @@ async function save(){
       headers:{'Authorization':'Bearer '+GH_TOKEN,'Content-Type':'application/json'},
       body: JSON.stringify({message:'update shops via nav', content:content, sha:sha, branch:GH_BRANCH})
     });
-    if(put.status===401){ toast('Token 已失效，请点🔑重新粘贴新 Token'); return; }
+    if(put.status===401){ toast('Token 已失效，请点Token重新粘贴新 Token'); return; }
     if(!put.ok) throw new Error('HTTP '+put.status);
     purgeCDN();
     dirty=false; updateSaveBtn();
@@ -534,8 +535,8 @@ async function save(){
 function markDirty(){ dirty=true; updateSaveBtn(); }
 function updateSaveBtn(){
   const b=document.getElementById('saveBtn'); if(!b) return;
-  if(dirty){ b.classList.add('dirty'); b.textContent='💾 待保存'; }
-  else { b.classList.remove('dirty'); b.textContent='💾保存'; }
+  if(dirty){ b.classList.add('dirty'); b.textContent='待保存'; }
+  else { b.classList.remove('dirty'); b.textContent='保存'; }
 }
 /* ---- 自动同步：群友打开页面后定时拉取最新数据 ---- */
 let _autoTimer = null;
@@ -582,15 +583,15 @@ function render(){
   if(!manage && !q){
     const recs = recentArr.map(id=>{ for(const g of data.order){ const f=(data.groups[g]||[]).find(s=>s.id===id); if(f) return {s:f,g:g}; } return null; }).filter(Boolean).slice(0,8);
     if(recs.length){
-      recentHtml = `<div class="grp recent"><div class="grp-head"><div class="g-handle">≡</div><span class="gname">🕘 最近打开</span>`+
+      recentHtml = `<div class="grp recent"><div class="grp-head"><div class="g-handle">≡</div><span class="gname">最近打开</span>`+
         `<span class="cnt">${recs.length}</span>`+
         `<button class="mini" onclick="clearRecent()">清空</button></div>`+
         `<div class="list">`+
         recs.map(o=>{ const s=o.s, g=o.g; const id=s.id||''; const dnum=(s.num!=null&&s.num!==999)?(''+s.num):''; const isLink=/^https?:\/\//i.test(s.url||''); const u=esc(s.url||'');
           const txtLine=(!isLink&&s.url)?`<div class="nt">${u}</div>`:''; const noteLine=s.note?`<div class="nt">${esc(s.note)}</div>`:'';
           const faved=favSet.has(id);
-          const favBtn=`<button class="fav ${faved?'on':''}" title="收藏置顶" onclick="event.preventDefault();event.stopPropagation();toggleFav('${esc(id)}')">${faved?'★':'☆'}</button>`;
-          const copyBtn=s.url?`<button class="copy" title="复制" onclick="event.preventDefault();event.stopPropagation();copyItem('${esc(id)}')">📋</button>`:'';
+          const favBtn=`<button class="fav ${faved?'on':''}" title="收藏置顶" onclick="event.preventDefault();event.stopPropagation();toggleFav('${esc(id)}')">${faved?'已收藏':'收藏'}</button>`;
+          const copyBtn=s.url?`<button class="copy" title="复制" onclick="event.preventDefault();event.stopPropagation();copyItem('${esc(id)}')">复制</button>`:'';
           const inner=`<div class="ic">${dnum||badgeChar(s.name)}</div><div class="info"><div class="nm">${hl(s.name,q)}</div>${txtLine}${noteLine}</div>`+favBtn+copyBtn+(isLink?`<div class="arrow">›</div>`:'');
           return isLink?`<a class="item" href="${u}" target="_blank" rel="noopener" data-id="${esc(id)}" onclick="recordRecent('${esc(id)}')">${inner}</a>`:`<div class="item" data-id="${esc(id)}" onclick="recordRecent('${esc(id)}')">${inner}</div>`;
         }).join('')+
@@ -614,10 +615,10 @@ function render(){
     let head=`<div class="grp-head"><div class="g-handle">≡</div><span class="gname">${hl(g,q)}</span>`;
     if(!manage){ head+=`<button class="mini chev" title="折叠/展开" onclick="event.stopPropagation();toggleGroup('${esc(g)}')">${collapsed?'▸':'▾'}</button>`; }
     head+=`<span class="cnt">${shops.length}条</span>`+
-         `<button class="mini openall" title="在新标签页打开本组全部链接" onclick="event.stopPropagation();openGroup('${esc(g)}')">↗ 全部</button>`;
+         `<button class="mini openall" title="在新标签页打开本组全部链接" onclick="event.stopPropagation();openGroup('${esc(g)}')">打开全部</button>`;
     if(manage){
       head+=`<button class="mini" onclick="showShop('${esc(g)}')">＋条目</button>`+
-            `<button class="mini" onclick="renameGroup('${esc(g)}')">✎改名</button>`+
+            `<button class="mini" onclick="renameGroup('${esc(g)}')">改名</button>`+
             `<button class="del" onclick="delGroup('${esc(g)}')">删除</button>`;
     }
     head+='</div>';
@@ -633,13 +634,13 @@ function render(){
         const txtLine = (!isLink && s.url) ? `<div class="nt">${hl(s.url,q)}</div>` : '';
         const noteLine = s.note ? `<div class="nt">${hl(s.note,q)}</div>` : '';
         const faved = favSet.has(id);
-        const favBtn = `<button class="fav ${faved?'on':''}" title="收藏置顶" onclick="event.preventDefault();event.stopPropagation();toggleFav('${esc(id)}')">${faved?'★':'☆'}</button>`;
-        const copyBtn = s.url ? `<button class="copy" title="复制" onclick="event.preventDefault();event.stopPropagation();copyItem('${esc(id)}')">📋</button>` : '';
+        const favBtn = `<button class="fav ${faved?'on':''}" title="收藏置顶" onclick="event.preventDefault();event.stopPropagation();toggleFav('${esc(id)}')">${faved?'已收藏':'收藏'}</button>`;
+        const copyBtn = s.url ? `<button class="copy" title="复制" onclick="event.preventDefault();event.stopPropagation();copyItem('${esc(id)}')">复制</button>` : '';
         const inner = `<div class="s-handle">≡</div>`+
           `<div class="ic">${dnum||badgeChar(s.name)}</div>`+
           `<div class="info"><div class="nm">${hl(s.name,q)}</div>${txtLine}${noteLine}</div>`+
-          (manage?`<div class="ops"><button class="e" onclick="event.preventDefault();editShop('${esc(g)}','${esc(id)}')">✎</button>`+
-                   `<button class="d" onclick="event.preventDefault();delShop('${esc(g)}','${esc(id)}')">🗑</button></div>`:'')+
+          (manage?`<div class="ops"><button class="e" onclick="event.preventDefault();editShop('${esc(g)}','${esc(id)}')">编辑</button>`+
+                   `<button class="d" onclick="event.preventDefault();delShop('${esc(g)}','${esc(id)}')">删除</button></div>`:'')+
           favBtn + copyBtn +
           (isLink?`<div class="arrow">›</div>`:'');
         if(isLink){
@@ -655,7 +656,7 @@ function render(){
   });
   if(recentHtml) wrap.insertAdjacentHTML('afterbegin', recentHtml);
   const f=document.createElement('div'); f.className='foot';
-  f.innerHTML='数据存于 GitHub，打开自动同步 · 增删/拖拽后点💾保存即上云 · 📦备份可导出 · 🗑️回收站可恢复 · 快捷键 / 搜索、Ctrl+S 保存';
+  f.innerHTML='数据存于 GitHub，打开自动同步 · 增删/拖拽后点保存即上云 · 备份可导出 · 回收站可恢复 · 快捷键 / 搜索、Ctrl+S 保存';
   wrap.appendChild(f);
   wrap.insertAdjacentHTML('afterbegin', calCardHTML());
   if(manage && !q){ initSortables(); } else { destroySortables(); }
@@ -822,7 +823,7 @@ mask.addEventListener('click',e=>{ if(e.target===mask) closeModal(); });
 document.getElementById('wxMask').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeWx(); });
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){ closeModal(); closeBackup(); closeTrash(); closeWx(); return; }
-  if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='s'){ e.preventDefault(); if(GH_TOKEN) save(); else toast('请先点 🔑Token 粘贴令牌'); return; }
+  if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='s'){ e.preventDefault(); if(GH_TOKEN) save(); else toast('请先点 Token 粘贴令牌'); return; }
   if(e.key==='/' && !/INPUT|TEXTAREA/.test(e.target.tagName) && !e.metaKey && !e.ctrlKey){ e.preventDefault(); const q=document.getElementById('q'); if(q) q.focus(); }
 });
 
@@ -873,10 +874,10 @@ function toggleTheme(){
   dark=!dark;
   document.body.classList.toggle('dark',dark);
   localStorage.setItem('xy_dark', dark?'1':'0');
-  document.getElementById('themeBtn').textContent = dark?'☀️':'🌙';
+  document.getElementById('themeBtn').textContent = dark?'日间':'夜间';
 }
 if(dark){ document.body.classList.add('dark'); }
-document.getElementById('themeBtn').textContent = dark?'☀️':'🌙';
+document.getElementById('themeBtn').textContent = dark?'日间':'夜间';
 
 function toggleCompact(){ compact=!compact; document.body.classList.toggle('compact',compact); const b=document.getElementById('compactBtn'); if(b) b.classList.toggle('on',compact); }
 
@@ -887,7 +888,27 @@ const WX_KEY='xy_weather';
 const WX_MAP={0:'晴',1:'晴',2:'多云',3:'阴',45:'雾',48:'雾',51:'小雨',53:'小雨',55:'小雨',56:'冻雨',57:'冻雨',
   61:'雨',63:'雨',65:'大雨',66:'冻雨',67:'冻雨',71:'雪',73:'雪',75:'大雪',77:'雪粒',
   80:'阵雨',81:'阵雨',82:'强阵雨',85:'阵雪',86:'阵雪',95:'雷暴',96:'雷暴',99:'雷暴'};
-const WX_EMO={sunny:'☀️',cloudy:'☁️',rainy:'🌧️','rainy-light':'🌧️','rainy-medium':'🌧️','rainy-heavy':'🌧️',snowy:'❄️',storm:'⛈️',night:'🌙'};
+function wxIcon(cls){
+  const t = cls ? cls.replace('wx-','') : 'cloudy';
+  const sun='<circle cx="12" cy="12" r="4.6" fill="#f59e0b"/><g stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="2.6" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="21.4"/><line x1="2.6" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="21.4" y2="12"/><line x1="5.3" y1="5.3" x2="6.9" y2="6.9"/><line x1="17.1" y1="17.1" x2="18.7" y2="18.7"/><line x1="5.3" y1="18.7" x2="6.9" y2="17.1"/><line x1="17.1" y1="6.9" x2="18.7" y2="5.3"/></g>';
+  const cloud='<path d="M7 18.6a4.3 4.3 0 0 1 .4-8.5A5 5 0 0 1 17 9.9a3.7 3.7 0 0 1 .2 8.7H7z" fill="#94a3b8"/>';
+  const cloudDark='<path d="M7 18.6a4.3 4.3 0 0 1 .4-8.5A5 5 0 0 1 17 9.9a3.7 3.7 0 0 1 .2 8.7H7z" fill="#64748b"/>';
+  const moon='<path d="M16 4a8 8 0 1 0 4 13 6.4 6.4 0 0 1-4-13z" fill="#cbd5e1"/>';
+  const drop=(x)=>'<line x1="'+x+'" y1="18.4" x2="'+(x-1)+'" y2="21.4" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round"/>';
+  const bolt='<path d="M12.5 12.5l-2.6 4.2h2.2l-1.1 4 4.2-5.4h-2.3l1.2-3z" fill="#fbbf24"/>';
+  const snow='<g fill="#e2e8f0"><circle cx="9" cy="20" r="1.1"/><circle cx="13" cy="20.6" r="1.1"/><circle cx="17" cy="20" r="1.1"/></g>';
+  const fog='<g stroke="#94a3b8" stroke-width="1.6" stroke-linecap="round"><line x1="6" y1="15.5" x2="18" y2="15.5"/><line x1="7" y1="19" x2="17" y2="19"/></g>';
+  switch(t){
+    case 'sunny': return '<svg viewBox="0 0 24 24" class="wxic">'+sun+'</svg>';
+    case 'night': return '<svg viewBox="0 0 24 24" class="wxic">'+moon+'</svg>';
+    case 'rainy-light': return '<svg viewBox="0 0 24 24" class="wxic">'+cloud+drop(12)+'</svg>';
+    case 'rainy-medium': return '<svg viewBox="0 0 24 24" class="wxic">'+cloud+drop(9)+drop(13)+drop(17)+'</svg>';
+    case 'rainy-heavy': return '<svg viewBox="0 0 24 24" class="wxic">'+cloudDark+drop(8)+drop(12)+drop(16)+drop(11)+drop(15)+'</svg>';
+    case 'storm': return '<svg viewBox="0 0 24 24" class="wxic">'+cloudDark+bolt+'</svg>';
+    case 'snowy': return '<svg viewBox="0 0 24 24" class="wxic">'+cloud+snow+'</svg>';
+    default: return '<svg viewBox="0 0 24 24" class="wxic">'+cloud+'</svg>';
+  }
+}
 /* 城市搜索改用 Open-Meteo 地理编码（免 key、CORS 友好），不再依赖 DataV 三级联动大文件 */
 function wxClassName(code,isDay){
   if(isDay!==1) return 'wx-night';
@@ -905,17 +926,17 @@ function wxCardFill(cls,nm,t,name,sr,ss,aqi,aql){
   if(cls){
     let sub='';
     if(sr||ss){
-      sub+='🌅日出 '+(sr||'—');
-      if(ss) sub+='　🌇日落 '+(ss||'—');
+      sub+='日出 '+(sr||'—');
+      if(ss) sub+='　日落 '+(ss||'—');
     }
-    if(aqi!=null) sub+=(sub?'　·　':'')+'💨空气质量 <span class="wa">'+aqi+(aql?' '+aql:'')+'</span>';
-    card.innerHTML='<div class="wrow"><span class="wleft"><span class="wemo">'+(WX_EMO[cls.replace('wx-','')]||'🌤')+'</span>'+
+    if(aqi!=null) sub+=(sub?'　·　':'')+'空气质量 <span class="wa">'+aqi+(aql?' '+aql:'')+'</span>';
+    card.innerHTML='<div class="wrow"><span class="wleft"><span class="wemo">'+wxIcon(cls)+'</span>'+
       (name?'<span class="wcity">'+esc(name)+'</span>':'')+
       '<span class="wdesc">'+esc(nm||'')+'</span></span>'+
       (t!=null?'<span class="wtemp">'+Math.round(t)+'°</span>':'')+'</div>'+
       (sub?'<div class="wsub">'+sub+'</div>':'');
   }else{
-    card.innerHTML='<div class="wrow"><span class="wemo">🌤</span><span class="wdesc">点此设置天气</span></div>';
+    card.innerHTML='<div class="wrow"><span class="wemo">'+wxIcon('cloudy')+'</span><span class="wdesc">点此设置天气</span></div>';
   }
 }
 function wxApply(cls,nm,t,name,sr,ss,aqi,aql){
@@ -930,7 +951,7 @@ function wxHourlyFill(list,sr,ss){
   box.innerHTML=list.map(h=>{
     const hm=wxTimeToMin(h.time);
     const isDay=hm>=srM && hm<ssM ? 1 : 0;
-    const cls=wxClassName(h.code,isDay), emo=WX_EMO[cls.replace('wx-','')]||'🌤';
+    const cls=wxClassName(h.code,isDay), emo=wxIcon(cls);
     return '<div class="wh"><span class="wht">'+esc(h.time)+'</span><span class="whe">'+emo+'</span><span class="whv">'+Math.round(h.t)+'°</span></div>';
   }).join('');
 }
@@ -983,7 +1004,7 @@ async function wxFetchWeather(lat,lon,name){
     }catch(e){}
     wxHourlyFill(hourly,sr,ss);
     wxApply(cls,nm,t,name,sr,ss,aqi,aql); wxSave({lat,lon,name:name||'',cls,nm,t,sr,ss,aqi,aql,hourly,ts:Date.now()});
-    toast('🌤 '+(name?name+' · ':'')+nm+(t!=null?(' '+Math.round(t)+'°'):''));
+    toast((name?name+' · ':'')+nm+(t!=null?(' '+Math.round(t)+'°'):''));
   }catch(e){ toast('天气获取失败：'+(e.message||e)); }
 }
 /* 行政级别权重：数字越小排越前（市/县/区 优先于 村/镇/街道，避免搜「昆山」先出四川昆山村） */
@@ -1133,10 +1154,10 @@ function importData(file){
   fr.onload=()=>{ try{
     const j=JSON.parse(fr.result);
     if(!j || !j.groups || !Array.isArray(j.order)) throw new Error('文件格式不正确');
-    if(!confirm('导入将覆盖当前页面数据（不会自动上传，需点 💾 保存）。确认导入？')) return;
+    if(!confirm('导入将覆盖当前页面数据（不会自动上传，需点保存）。确认导入？')) return;
     data=j;
     Object.values(data.groups||{}).forEach(arr=>Array.isArray(arr)&&arr.forEach(s=>{ if(s && !s.id) s.id=genId(); }));
-    markDirty(); closeBackup(); render(); toast('已导入，记得点 💾 保存');
+    markDirty(); closeBackup(); render(); toast('已导入，记得点保存');
   }catch(e){ toast('导入失败：'+e.message); } };
   fr.readAsText(file);
 }
@@ -1332,7 +1353,7 @@ function calCardHTML(){
   const d=new Date();
   const wd=['日','一','二','三','四','五','六'][d.getDay()];
   return '<div class="cal-card" onclick="openCal()" title="打开日历">'+
-    '<div class="ic">📅</div>'+
+    '<div class="ic"></div>'+
     '<div class="info"><div class="nm">日历</div><div class="nt">'+d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+' 周'+wd+' · 点击查看年/月/周/日</div></div>'+
     '<div class="arrow">›</div>'+
     '</div>';
