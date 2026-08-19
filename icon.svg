@@ -1,5 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <rect width="512" height="512" rx="112" fill="#10b981"/>
-  <path d="M168 208h176l26 160H142z" fill="#ffffff" opacity="0.96"/>
-  <path d="M206 208v-22a50 50 0 0 1 100 0v22" fill="none" stroke="#ffffff" stroke-width="22" stroke-linecap="round"/>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="0.55" stop-color="#3b82f6"/>
+      <stop offset="1" stop-color="#818cf8"/>
+    </linearGradient>
+    <linearGradient id="pin" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#10b981"/>
+      <stop offset="1" stop-color="#0e9fbf"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <circle cx="150" cy="118" r="210" fill="#ffffff" opacity="0.10"/>
+  <g transform="translate(0,16)">
+    <path d="M256 96 C 198 96 152 142 152 200 C 152 276 256 360 256 360 C 256 360 360 276 360 200 C 360 142 314 96 256 96 Z" fill="#ffffff"/>
+    <circle cx="256" cy="200" r="72" fill="url(#pin)"/>
+    <path d="M256 152 L308 192 L204 192 Z" fill="#ffffff"/>
+    <rect x="208" y="192" width="96" height="58" rx="7" fill="#ffffff"/>
+    <rect x="240" y="214" width="32" height="36" rx="5" fill="#0f2f42"/>
+  </g>
 </svg>
