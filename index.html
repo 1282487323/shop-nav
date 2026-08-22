@@ -65,7 +65,8 @@
   .grp-head .del{border:0;background:rgba(239,68,68,.10);color:#ef4444;border-radius:12px;padding:4px 9px;font-size:12px;cursor:pointer}
   .g-handle{display:none;align-items:center;color:var(--accent);font-size:18px;padding-right:4px;cursor:grab;touch-action:none}
   .s-handle{display:none;align-items:center;justify-content:center;color:rgba(45,43,85,.35);font-size:16px;width:22px;flex-shrink:0;cursor:grab;touch-action:none}
-  .manage .g-handle,.manage .s-handle{display:flex}
+  .manage .g-handle{display:flex}
+  .grp.sorting .s-handle{display:flex}
   .sortable-ghost{opacity:.35;background:rgba(var(--acR),var(--acG),var(--acB),.08)}
   .sortable-chosen{box-shadow:0 2px 16px rgba(var(--acR),var(--acG),var(--acB),.25);border-radius:12px}
   .list{padding:10px 12px 14px;min-height:8px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
@@ -316,6 +317,58 @@ body.dark .cal-fest{color:#ff7875}
 body.dark .cal-fest.term{color:rgba(255,255,255,.55)}
 body.dark .cal-cell.sm.has-fest::after{background:#ff7875}
 .wxic{width:30px;height:30px;flex:none}
+/* ===== 待办事项 ===== */
+.todo-card .badge{margin-left:auto;background:rgba(var(--acR),var(--acG),var(--acB),.14);color:var(--accent);border-radius:10px;padding:2px 9px;font-size:12px;font-weight:700}
+.todo-card .badge.zero{opacity:.45}
+.todo-add{display:flex;gap:8px;margin-bottom:12px}
+.todo-add input{flex:1;border:1px solid rgba(var(--acR),var(--acG),var(--acB),.3);background:var(--card);color:var(--ink);border-radius:10px;padding:9px 11px;font-size:14px;font-family:inherit;outline:0}
+.todo-add input:focus{border-color:rgba(var(--acR),var(--acG),var(--acB),.6)}
+.todo-add .t-btn{padding:7px 16px}
+.todo-type{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.todo-type button{border:0;border-radius:9px;padding:6px 11px;font-size:12px;cursor:pointer;background:rgba(var(--acR),var(--acG),var(--acB),.10);color:var(--ink);font-family:inherit}
+.todo-type button.active{background:linear-gradient(135deg,var(--accent),var(--accent2),var(--aurora3));color:#fff}
+.todo-param{margin-bottom:12px;font-size:13px;color:var(--sub)}
+.todo-param input,.todo-param select{font-family:inherit;border:1px solid rgba(var(--acR),var(--acG),var(--acB),.3);background:var(--card);color:var(--ink);border-radius:9px;padding:7px 10px;font-size:14px;outline:0}
+.todo-param input:focus,.todo-param select:focus{border-color:rgba(var(--acR),var(--acG),var(--acB),.6)}
+.todo-list{max-height:46vh;overflow:auto;margin:4px 0}
+.todo-item{display:flex;align-items:center;gap:10px;padding:10px 4px;border-bottom:1px solid var(--line)}
+.todo-item .cb{width:22px;height:22px;border-radius:7px;border:2px solid rgba(var(--acR),var(--acG),var(--acB),.5);background:transparent;flex-shrink:0;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;font-weight:700;transition:.15s}
+.todo-item .cb.on{background:linear-gradient(135deg,var(--accent),var(--accent2),var(--aurora3));border-color:transparent}
+.todo-item .tname{flex:1;min-width:0;font-size:14px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.todo-item .ttag{font-size:11px;color:var(--sub);flex-shrink:0}
+.todo-item.done .tname{text-decoration:line-through;opacity:.5}
+.todo-item .tdel{border:0;background:rgba(239,68,68,.10);color:#ef4444;border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;flex-shrink:0}
+.todo-item .ted{border:0;background:rgba(var(--acR),var(--acG),var(--acB),.12);color:rgba(var(--acR),var(--acG),var(--acB),1);border-radius:8px;padding:5px 10px;font-size:12px;cursor:pointer;flex-shrink:0}
+.todo-empty{color:var(--sub);text-align:center;padding:18px;font-size:13px}
+.todo-editbar{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:8px 11px;border-radius:10px;background:rgba(var(--acR),var(--acG),var(--acB),.10);font-size:13px;color:var(--ink)}
+.todo-editbar b{color:rgba(var(--acR),var(--acG),var(--acB),1)}
+.todo-editbar .t-link{border:0;background:transparent;color:var(--sub);text-decoration:underline;cursor:pointer;font-size:12px;margin-left:auto}
+.todo-add .t-btn.editing{background:rgba(var(--acR),var(--acG),var(--acB),.18);color:rgba(var(--acR),var(--acG),var(--acB),1)}
+body.dark .todo-add input,body.dark .todo-param input,body.dark .todo-param select{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.15)}
+body.compact .todo-card{display:none}
+/* ===== 待办：到时间弹窗提醒 ===== */
+.todo-alert{display:none;align-items:center;gap:8px;margin-bottom:10px;font-size:13px;color:var(--sub)}
+.todo-alert.show{display:flex}
+.todo-alert input{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+.todo-alert .lbl{flex:1;cursor:pointer;user-select:none}
+/* 提醒弹窗（独立、合并多条、需手动关闭） */
+.remind-mask{position:fixed;inset:0;background:rgba(45,43,85,.45);display:none;align-items:center;justify-content:center;z-index:60;padding:20px;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.remind-mask.show{display:flex;animation:remindIn .25s ease}
+@keyframes remindIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+.remind-modal{background:rgba(255,255,255,.98);border:1px solid rgba(var(--acR),var(--acG),var(--acB),.25);border-radius:20px;width:100%;max-width:420px;padding:22px;color:var(--ink);box-shadow:0 24px 70px rgba(var(--acR),var(--acG),var(--acB),.30)}
+.remind-modal h3{margin:0 0 4px;font-size:18px;display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--accent),var(--accent2),var(--aurora3));-webkit-background-clip:text;background-clip:text;color:transparent}
+.remind-modal .rtime{font-size:12px;color:var(--sub);margin-bottom:14px}
+.remind-list{max-height:42vh;overflow:auto;margin:0 0 16px}
+.remind-item{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:12px;background:linear-gradient(135deg,rgba(var(--acR),var(--acG),var(--acB),.10),rgba(var(--acR),var(--acG),var(--acB),.04));margin-bottom:8px}
+.remind-item .ric{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2),var(--aurora3));color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex-shrink:0}
+.remind-item .rname{flex:1;min-width:0;font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.remind-item .rtag{font-size:11px;color:var(--sub);flex-shrink:0}
+.remind-foot{display:flex;align-items:center;gap:10px}
+.remind-foot .t-btn{flex:1;padding:11px;border-radius:11px;justify-content:center}
+.remind-sound{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--sub);cursor:pointer;user-select:none}
+.remind-sound input{width:15px;height:15px;accent-color:var(--accent);cursor:pointer}
+body.dark .remind-modal{background:rgba(16,20,40,.98);border-color:rgba(255,255,255,.14);color:var(--ink)}
+body.dark .remind-item{background:rgba(255,255,255,.07)}
 </style>
 </head>
 <body>
@@ -414,6 +467,44 @@ body.dark .cal-cell.sm.has-fest::after{background:#ff7875}
   </div>
 </div>
 
+<div class="mask" id="todoMask" onclick="if(event.target===this)closeTodo()">
+  <div class="modal" style="max-width:440px">
+    <h3>待办事项 <span id="todoCnt" class="cnt"></span></h3>
+    <div class="todo-editbar" id="todoEditBar" style="display:none">
+      正在编辑：<b id="todoEditName"></b>
+      <button class="t-link" onclick="cancelEdit()">取消</button>
+    </div>
+    <div class="todo-add">
+      <input id="todoInput" placeholder="添加一条待办，回车确认" onkeydown="if(event.key==='Enter')addTodo()">
+      <button class="t-btn" id="todoSubmitBtn" onclick="addTodo()">添加</button>
+    </div>
+    <div class="todo-type" id="todoType">
+      <button type="button" data-t="once" class="active">一次性</button>
+      <button type="button" data-t="hour">每 N 小时</button>
+      <button type="button" data-t="day">每天</button>
+      <button type="button" data-t="week">每周</button>
+      <button type="button" data-t="month">每月</button>
+      <button type="button" data-t="datetime">指定时间</button>
+    </div>
+    <div class="todo-param" id="todoParam"></div>
+    <label class="todo-alert" id="todoAlert"><input type="checkbox" id="todoAlertChk"><span class="lbl">到时间弹窗提醒（响铃 + 弹窗，不漏看）</span></label>
+    <div class="todo-list" id="todoList"></div>
+    <div class="actions" style="margin-top:12px"><button class="btn secondary" onclick="closeTodo()">关闭</button></div>
+  </div>
+</div>
+
+<div class="remind-mask" id="remindMask">
+  <div class="remind-modal">
+    <h3>⏰ 待办时间到</h3>
+    <div class="rtime" id="remindTime"></div>
+    <div class="remind-list" id="remindList"></div>
+    <div class="remind-foot">
+      <label class="remind-sound"><input type="checkbox" id="remindSoundChk" checked> 声音</label>
+      <button class="t-btn" onclick="closeRemind()">知道了</button>
+    </div>
+  </div>
+</div>
+
 <script src="sortable.min.js"></script>
 <script>
 /* ===== GitHub 纯静态方案（0 元，无需后端）===== */
@@ -504,6 +595,7 @@ async function load(){
       return;
     }
     wrap.innerHTML='<div class="empty">加载失败：'+(lastErr?esc(lastErr.message):'网络或 CDN 暂时不可用')+'<br>请检查网络或稍后刷新</div>';
+    wrap.insertAdjacentHTML('afterbegin', calCardHTML()+todoCardHTML());
     return;
   }
   data = j;
@@ -601,7 +693,7 @@ function render(){
 
   if(data.order.length===0 && !recentHtml){
     wrap.innerHTML='<div class="empty">还没有组别，点右上角「＋组别」添加</div>';
-    wrap.insertAdjacentHTML('afterbegin', calCardHTML());
+    wrap.insertAdjacentHTML('afterbegin', calCardHTML()+todoCardHTML());
     return;
   }
   data.order.forEach(g=>{
@@ -617,9 +709,10 @@ function render(){
     head+=`<span class="cnt">${shops.length}条</span>`+
          `<button class="mini openall" title="在新标签页打开本组全部链接" onclick="event.stopPropagation();openGroup('${esc(g)}')">打开全部</button>`;
     if(manage){
-      head+=`<button class="mini" onclick="showShop('${esc(g)}')">＋条目</button>`+
-            `<button class="mini" onclick="renameGroup('${esc(g)}')">改名</button>`+
-            `<button class="del" onclick="delGroup('${esc(g)}')">删除</button>`;
+      head+=`<button class="mini sort-toggle" onclick="event.stopPropagation();toggleGroupSort('${esc(g)}')">${groupSort.has(g)?'完成':'排序'}</button>`+
+            `<button class="mini" onclick="event.stopPropagation();showShop('${esc(g)}')">＋条目</button>`+
+            `<button class="mini" onclick="event.stopPropagation();renameGroup('${esc(g)}')">改名</button>`+
+            `<button class="del" onclick="event.stopPropagation();delGroup('${esc(g)}')">删除</button>`;
     }
     head+='</div>';
     let bodyHtml=`<div class="list" data-group="${esc(g)}">`;
@@ -643,7 +736,11 @@ function render(){
                    `<button class="d" onclick="event.preventDefault();delShop('${esc(g)}','${esc(id)}')">删除</button></div>`:'')+
           favBtn + copyBtn +
           (isLink?`<div class="arrow">›</div>`:'');
-        if(isLink){
+        // 管理模式下 item 用 <div> 而非 <a>，避免链接拖拽被 SortableJS 的 a 标签过滤拦截，
+        // 同时也防止管理模式误触发跳转；查看模式保留 <a> 以正常打开链接。
+        if(manage){
+          bodyHtml+=`<div class="item" data-id="${esc(id)}">`+inner+`</div>`;
+        }else if(isLink){
           bodyHtml+=`<a class="item" href="${u}" target="_blank" rel="noopener" data-id="${esc(id)}" onclick="recordRecent('${esc(id)}')">`+inner+`</a>`;
         }else{
           bodyHtml+=`<div class="item" data-id="${esc(id)}" onclick="recordRecent('${esc(id)}')">`+inner+`</div>`;
@@ -658,46 +755,101 @@ function render(){
   const f=document.createElement('div'); f.className='foot';
   f.innerHTML='数据存于 GitHub，打开自动同步 · 增删/拖拽后点保存即上云 · 备份可导出 · 回收站可恢复 · 快捷键 / 搜索、Ctrl+S 保存';
   wrap.appendChild(f);
-  wrap.insertAdjacentHTML('afterbegin', calCardHTML());
+  wrap.insertAdjacentHTML('afterbegin', calCardHTML()+todoCardHTML());
   if(manage && !q){ initSortables(); } else { destroySortables(); }
 }
 
 function esc(s){ return (''+s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
-/* ---- 拖拽排序（仅管理模式下、无搜索时）---- */
+/* ---- 拖拽排序 ----
+   组间排序：管理模式进入后自动可用（拖整个组别卡片 g-handle）。
+   组内条目排序：默认关闭，必须点组别卡片上的「排序」按钮才开启，且只针对该组。 */
 let sortables = [];
+let groupSort = new Set();   // 处于「排序模式」的组名集合
+function findSec(g){
+  return Array.from(document.querySelectorAll('.grp')).find(sec=>sec.dataset.group===g) || null;
+}
 function destroySortables(){
   sortables.forEach(s=>{ try{ s.destroy(); }catch(e){} });
   sortables = [];
+  // 清除组内 list 上的 sortable 实例标记
+  document.querySelectorAll('.list').forEach(l=>{ if(l.__sortable){ l.__sortable=null; } });
 }
 function initSortables(){
   destroySortables();
   if(typeof Sortable === 'undefined') return;
+  // 组间排序：管理模式自动可用
   const wrap = document.getElementById('wrap');
   sortables.push(new Sortable(wrap, {
     draggable:'.grp', handle:'.g-handle', animation:150, forceFallback:true,
-    onEnd: function(){ syncGroupsFromDOM(); markDirty(); }
+    filter:'button,input,.ops', preventOnFilter:false,
+    onEnd: function(){ syncGroupsFromDOM(); markDirty(); applyGroupSort(); }
   }));
-  document.querySelectorAll('.list').forEach(list=>{
-    const g = list.getAttribute('data-group');
-    sortables.push(new Sortable(list, {
-      draggable:'.item', handle:'.s-handle', animation:150, forceFallback:true,
-      onEnd: function(evt){ syncShopsFromDOM(g, evt.from); markDirty(); }
-    }));
+  // 恢复此前已开启排序模式的组的条目拖拽
+  applyGroupSort();
+}
+/* 仅对 groupSort 中的组别开启内部条目拖拽（按需绑定，避免多组同时绑定导致手柄失效） */
+function applyGroupSort(){
+  if(typeof Sortable === 'undefined') return;
+  groupSort.forEach(g=>{
+    const sec = findSec(g);
+    if(!sec) return;
+    sec.classList.add('sorting');
+    const list = sec.querySelector('.list');
+    if(list && !list.__sortable){
+      list.__sortable = new Sortable(list, {
+        draggable:'.item', handle:'.s-handle', animation:150, forceFallback:true,
+        filter:'button,input,.ops', preventOnFilter:false,
+        onEnd: function(evt){ syncShopsFromDOM(g, evt.from); markDirty(); }
+      });
+      sortables.push(list.__sortable);
+    }
+    const btn = sec.querySelector('.sort-toggle');
+    if(btn) btn.textContent = '完成';
   });
 }
+/* 点击组别卡片「排序 / 完成」：只切换该组的条目拖拽 */
+function toggleGroupSort(g){
+  const sec = findSec(g);
+  if(!sec) return;
+  const list = sec.querySelector('.list');
+  if(groupSort.has(g)){
+    groupSort.delete(g);
+    sec.classList.remove('sorting');
+    if(list && list.__sortable){
+      const inst = list.__sortable; list.__sortable=null;
+      try{ inst.destroy(); }catch(e){}
+      sortables = sortables.filter(s=> s!==inst);
+    }
+  } else {
+    groupSort.add(g);
+    sec.classList.add('sorting');
+    if(list && !list.__sortable){
+      list.__sortable = new Sortable(list, {
+        draggable:'.item', handle:'.s-handle', animation:150, forceFallback:true,
+        filter:'button,input,.ops', preventOnFilter:false,
+        onEnd: function(evt){ syncShopsFromDOM(g, evt.from); markDirty(); }
+      });
+      sortables.push(list.__sortable);
+    }
+  }
+  const btn = sec.querySelector('.sort-toggle');
+  if(btn) btn.textContent = groupSort.has(g) ? '完成' : '排序';
+}
+// 拖拽 group 只更新组的排列顺序，绝不重建 data.groups 结构，
+// 否则会丢失/错乱各组的 shop 数据。
 function syncGroupsFromDOM(){
   const wrap = document.getElementById('wrap');
-  const newOrder = []; const newGroups = {};
+  const newOrder = [];
   wrap.querySelectorAll('.grp').forEach(sec=>{
     const g = sec.getAttribute('data-group');
-    if(g){ newOrder.push(g); newGroups[g] = data.groups[g]; }
+    if(g && data.groups[g] != null) newOrder.push(g);
   });
-  data.order = newOrder; data.groups = newGroups;
+  data.order = newOrder;
 }
 function syncShopsFromDOM(g, listEl){
-  const list = listEl || document.querySelector('.list[data-group="'+g+'"]');
-  if(!list) return;
+  const list = listEl || (findSec(g) && findSec(g).querySelector('.list'));
+  if(!list || !data.groups[g]) return;
   const map = {}; (data.groups[g]||[]).forEach(s=>{ if(s.id) map[s.id]=s; });
   const ids = Array.from(list.querySelectorAll('.item')).map(it=>it.getAttribute('data-id'));
   data.groups[g] = ids.map(id=>map[id]).filter(Boolean);
@@ -706,6 +858,7 @@ function syncShopsFromDOM(g, listEl){
 function toggleManage(){
   manage=!manage;
   document.getElementById('mgBtn').classList.toggle('on',manage);
+  if(!manage) groupSort.clear();   // 退出管理模式时关闭所有组内排序状态
   updateSaveBtn();   // 保存按钮常驻显示，不受管理模式影响，仅同步待保存状态
   render();
 }
@@ -819,8 +972,25 @@ function delGroup(g){
     data.groups[g]=items; markDirty(); render();
   });
 }
-mask.addEventListener('click',e=>{ if(e.target===mask) closeModal(); });
-document.getElementById('wxMask').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeWx(); });
+/* 统一的「点灰底关闭」逻辑：
+   - 必须 mousedown 起点就在灰底（用户真的点了背景，而非从输入框/卡片拖出）
+   - 必须 mouseup/click 终点也在灰底
+   这样可避免「在输入框按住拖到外面松开」被误判为点灰底而关闭窗口。 */
+function bindMaskClose(maskEl, closeFn){
+  let downOnMask = false;
+  maskEl.addEventListener('mousedown', e=>{ downOnMask = (e.target === maskEl); });
+  maskEl.addEventListener('click', e=>{ if(downOnMask && e.target === maskEl) closeFn(); downOnMask = false; });
+}
+bindMaskClose(mask, closeModal);
+bindMaskClose(document.getElementById('wxMask'), closeWx);
+document.getElementById('calMask').setAttribute('onclick',''); // 改用统一绑定，避免重复关闭
+bindMaskClose(document.getElementById('calMask'), closeCal);
+document.getElementById('todoMask') && (function(){
+  const el=document.getElementById('todoMask'); el.setAttribute('onclick','');
+  bindMaskClose(el, closeTodo);
+})();
+bindMaskClose(document.getElementById('bakMask'), closeBackup);
+bindMaskClose(document.getElementById('trashMask'), closeTrash);
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){ closeModal(); closeBackup(); closeTrash(); closeWx(); return; }
   if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='s'){ e.preventDefault(); if(GH_TOKEN) save(); else toast('请先点 Token 粘贴令牌'); return; }
@@ -1358,6 +1528,17 @@ function calCardHTML(){
     '<div class="arrow">›</div>'+
     '</div>';
 }
+function renderCardBadge(){ try{ render(); }catch(e){} }
+function todoCardHTML(){
+  const left = todos.filter(t=>!t.done).length;
+  const badge = '<span class="badge'+(left?'':' zero')+'">'+left+'</span>';
+  return '<div class="cal-card todo-card" onclick="openTodo()" title="打开待办">'+
+    '<div class="ic">✓</div>'+
+    '<div class="info"><div class="nm">待办事项</div><div class="nt">点击查看 / 添加待办'+(left?(' · 还有 '+left+' 条未完成'):' · 全部完成')+'</div></div>'+
+    badge+
+    '<div class="arrow">›</div>'+
+    '</div>';
+}
 function openCal(){ const m=document.getElementById('calMask'); if(m) m.classList.add('show'); const b=document.getElementById('calBody'); if(b && !b.childElementCount) buildCal(b); }
 function closeCal(){ const m=document.getElementById('calMask'); if(m) m.classList.remove('show'); }
 
@@ -1383,6 +1564,204 @@ function genSparks(){
     host.appendChild(s);
   }
 }
+/* ===== 待办事项（个人，本机 localStorage，不写云端）===== */
+const TODO_KEY='xy_todos';
+let todos = JSON.parse(localStorage.getItem(TODO_KEY)||'[]');
+let todoType='once';   // 当前选中的循环类型
+let editingId=null;    // 正在编辑的待办 id（null=新增模式）
+function saveTodos(){ try{ localStorage.setItem(TODO_KEY, JSON.stringify(todos)); }catch(e){} }
+function genTodoId(){ return 't'+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+/* ---- 到时间弹窗提醒（合并多条 + 轻响）---- */
+const REMIND_SOUND_KEY='xy_remind_sound';
+let remindSoundOn = localStorage.getItem(REMIND_SOUND_KEY)!=='0';   // 默认开
+function beep(){
+  if(!remindSoundOn) return;
+  try{
+    const AC = window.AudioContext||window.webkitAudioContext; if(!AC) return;
+    const ctx = new AC();
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type='sine'; o.frequency.value=880;
+    g.gain.setValueAtTime(0.0001, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime+0.5);
+    o.connect(g); g.connect(ctx.destination);
+    o.start(); o.stop(ctx.currentTime+0.52);
+    o.onended=()=>{ try{ ctx.close(); }catch(e){} };
+  }catch(e){}
+}
+function showRemind(list){
+  const m=document.getElementById('remindMask'); if(!m) return;
+  const p=n=>String(n).padStart(2,'0');
+  const now=new Date();
+  document.getElementById('remindTime').textContent = now.getFullYear()+'-'+p(now.getMonth()+1)+'-'+p(now.getDate())+' '+p(now.getHours())+':'+p(now.getMinutes());
+  document.getElementById('remindList').innerHTML = list.map(t=>
+    '<div class="remind-item"><div class="ric">⏰</div>'+
+    '<div class="rname">'+esc(t.name)+'</div>'+
+    '<div class="rtag">'+esc(todoParamLabel(t))+'</div></div>'
+  ).join('');
+  const sc=document.getElementById('remindSoundChk'); if(sc) sc.checked=remindSoundOn;
+  m.classList.add('show');
+  beep();
+}
+function closeRemind(){
+  const m=document.getElementById('remindMask'); if(m) m.classList.remove('show');
+  const sc=document.getElementById('remindSoundChk');
+  if(sc){ remindSoundOn=sc.checked; localStorage.setItem(REMIND_SOUND_KEY, remindSoundOn?'1':'0'); }
+}
+const TODO_TYPE_LABEL={once:'一次性',hour:'每 N 小时',day:'每天',week:'每周',month:'每月',datetime:'指定时间'};
+function todoParamLabel(t){
+  if(t.type==='hour') return '每 '+t.param+' 小时轮回';
+  if(t.type==='day') return '每天 '+t.param;
+  if(t.type==='week') return '每周 '+['日','一','二','三','四','五','六'][t.param]+'';
+  if(t.type==='month') return '每月 '+t.param+' 号';
+  if(t.type==='datetime'){ const d=new Date(t.param); const p=n=>String(n).padStart(2,'0'); return '于 '+d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes()); }
+  return '一次性';
+}
+function openTodo(){
+  const m=document.getElementById('todoMask'); if(!m) return;
+  document.getElementById('todoInput').value='';
+  const ac=document.getElementById('todoAlertChk'); if(ac) ac.checked=true;
+  cancelEdit();
+  selectTodoType('once');
+  renderTodoList();
+  m.classList.add('show');
+  setTimeout(()=>{ const i=document.getElementById('todoInput'); if(i) i.focus(); },50);
+}
+function closeTodo(){ const m=document.getElementById('todoMask'); if(m) m.classList.remove('show'); }
+function selectTodoType(t){
+  todoType=t;
+  document.querySelectorAll('#todoType button').forEach(b=>b.classList.toggle('active', b.dataset.t===t));
+  const box=document.getElementById('todoParam'); box.innerHTML='';
+  if(t==='hour'){
+    box.innerHTML='<label>间隔小时数：</label> <input id="todoParamVal" type="number" min="1" max="720" value="2" style="width:90px"> 小时后重置为未完成';
+  }else if(t==='day'){
+    box.innerHTML='<label>每天时间：</label> <input id="todoParamVal" type="time" value="09:00"> 重置为未完成';
+  }else if(t==='week'){
+    box.innerHTML='<label>每星期：</label> <select id="todoParamVal">'+['日','一','二','三','四','五','六'].map((w,i)=>'<option value="'+i+'">'+w+'</option>').join('')+'</select> 重置为未完成';
+  }else if(t==='month'){
+    box.innerHTML='<label>每月：</label> <input id="todoParamVal" type="number" min="1" max="31" value="1" style="width:80px"> 号重置为未完成';
+  }else if(t==='datetime'){
+    box.innerHTML='<label>指定时间：</label> <input id="todoParamVal" type="datetime-local"> 到点重置为未完成';
+  }else{
+    box.innerHTML='<span>不重复，打勾即完成</span>';
+  }
+  const alertBox=document.getElementById('todoAlert');
+  if(alertBox) alertBox.classList.toggle('show', t!=='once');
+}
+document.querySelectorAll('#todoType button').forEach(b=>{ b.onclick=()=>selectTodoType(b.dataset.t); });
+function addTodo(){
+  const inp=document.getElementById('todoInput'); const v=(inp.value||'').trim();
+  if(!v){ toast('请输入待办内容'); return; }
+  let param=null;
+  if(todoType==='hour'){ param=Math.max(1, parseInt(document.getElementById('todoParamVal').value||'2',10)||2); }
+  else if(todoType==='day'){ param=document.getElementById('todoParamVal').value||'09:00'; }
+  else if(todoType==='week'){ param=parseInt(document.getElementById('todoParamVal').value||'0',10); }
+  else if(todoType==='month'){ param=Math.min(31, Math.max(1, parseInt(document.getElementById('todoParamVal').value||'1',10)||1)); }
+  else if(todoType==='datetime'){ const dv=document.getElementById('todoParamVal').value; param=dv?new Date(dv).getTime():null; if(!param||isNaN(param)){ toast('请选择有效时间'); return; } }
+  const alert = (todoType!=='once') ? (document.getElementById('todoAlertChk')||{}).checked===true : false;
+  if(editingId){
+    const t=todos.find(x=>x.id===editingId);
+    if(t){ t.name=v; t.type=todoType; t.param=param; t.alert=alert; }
+    cancelEdit();
+    saveTodos(); renderTodoList(); renderCardBadge();
+    toast('已保存修改');
+    return;
+  }
+  todos.push({id:genTodoId(), name:v, type:todoType, param, alert, done:false, lastReset:Date.now(), created:Date.now()});
+  saveTodos();
+  inp.value='';
+  renderTodoList(); renderCardBadge();
+  toast('已添加待办');
+}
+function editTodo(id){
+  const t=todos.find(x=>x.id===id); if(!t) return;
+  editingId=id;
+  const inp=document.getElementById('todoInput'); if(inp) inp.value=t.name;
+  const ac=document.getElementById('todoAlertChk'); if(ac) ac.checked = !!t.alert;
+  selectTodoType(t.type);
+  // 回填循环参数
+  const pv=document.getElementById('todoParamVal');
+  if(pv){ if(t.type==='hour') pv.value=t.param||2; else if(t.type==='day') pv.value=t.param||'09:00'; else if(t.type==='week') pv.value=(t.param||0); else if(t.type==='month') pv.value=t.param||1; else if(t.type==='datetime'){ const d=new Date(t.param||Date.now()); pv.value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')+'T'+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); } }
+  const bar=document.getElementById('todoEditBar'); if(bar){ bar.style.display='flex'; document.getElementById('todoEditName').textContent=t.name; }
+  const btn=document.getElementById('todoSubmitBtn'); if(btn){ btn.textContent='保存修改'; btn.classList.add('editing'); }
+  if(inp) inp.focus();
+}
+function cancelEdit(){
+  editingId=null;
+  const inp=document.getElementById('todoInput'); if(inp) inp.value='';
+  const bar=document.getElementById('todoEditBar'); if(bar) bar.style.display='none';
+  const btn=document.getElementById('todoSubmitBtn'); if(btn){ btn.textContent='添加'; btn.classList.remove('editing'); }
+}
+function toggleTodo(id){
+  const t=todos.find(x=>x.id===id); if(!t) return;
+  t.done=!t.done; if(!t.done) t.lastReset=Date.now();
+  saveTodos(); renderTodoList(); renderCardBadge();
+}
+function delTodo(id){
+  const t=todos.find(x=>x.id===id); if(!t) return;
+  if(!confirm('删除待办「'+t.name+'」？')) return;
+  todos=todos.filter(x=>x.id!==id); saveTodos(); renderTodoList(); renderCardBadge();
+}
+function renderTodoList(){
+  const list=document.getElementById('todoList'); if(!list) return;
+  const cnt=document.getElementById('todoCnt');
+  const left=todos.filter(t=>!t.done).length;
+  if(cnt) cnt.textContent=left?('('+left+' 未完成)'):'(全部完成)';
+  if(!todos.length){ list.innerHTML='<div class="todo-empty">暂无待办，上方输入框添加一条吧</div>'; return; }
+  const ordered=todos.slice().sort((a,b)=>(a.done?1:0)-(b.done?1:0) || (a.created||0)-(b.created||0));
+  list.innerHTML=ordered.map(t=>{
+    const tag=todoParamLabel(t);
+    return '<div class="todo-item'+(t.done?' done':'')+'" data-id="'+esc(t.id)+'">'+
+      '<div class="cb '+(t.done?'on':'')+'" onclick="toggleTodo(\''+esc(t.id)+'\')">'+(t.done?'✓':'')+'</div>'+
+      '<div class="tname" onclick="toggleTodo(\''+esc(t.id)+'\')">'+esc(t.name)+'</div>'+
+      '<div class="ttag">'+esc(tag)+'</div>'+
+      '<button class="ted" onclick="editTodo(\''+esc(t.id)+'\')">编辑</button>'+
+      '<button class="tdel" onclick="delTodo(\''+esc(t.id)+'\')">删除</button>'+
+    '</div>';
+  }).join('');
+}
+/* ---- 循环待办到点复位（每分钟检查）---- */
+function pad2(n){ return n<10?'0'+n:''+n; }
+function fmtHHMM(d){ return pad2(d.getHours())+':'+pad2(d.getMinutes()); }
+function checkTodos(){
+  if(!todos.length) return;
+  const now=new Date(), nd=now.getDate(), nm=now.getMonth(), ny=now.getFullYear();
+  const hhmm=fmtHHMM(now);
+  let changed=false;
+  const alertFired=[];
+  todos.forEach(t=>{
+    if(t.type==='once'){ return; }
+    let fire=false;
+    if(t.type==='datetime'){
+      if(t.param && now.getTime()>=t.param && t.lastReset < t.param){ fire=true; }
+    }else if(t.type==='hour'){
+      fire = (now.getTime() - (t.lastReset||0)) >= (t.param||2)*3600*1000;
+    }else if(t.type==='day'){
+      const lr=new Date(t.lastReset||0);
+      const sameDay = lr.getFullYear()===ny&&lr.getMonth()===nm&&lr.getDate()===nd;
+      fire = (!sameDay && hhmm>=t.param);
+    }else if(t.type==='week'){
+      const lr=new Date(t.lastReset||0);
+      const sameDay = lr.getFullYear()===ny&&lr.getMonth()===nm&&lr.getDate()===nd;
+      fire = (!sameDay && now.getDay()===t.param && hhmm>='00:00');
+    }else if(t.type==='month'){
+      const lr=new Date(t.lastReset||0);
+      const sameMonth = lr.getFullYear()===ny&&lr.getMonth()===nm;
+      fire = (!sameMonth && nd===t.param && hhmm>='00:00');
+    }
+    if(fire){
+      t.lastReset=Date.now();
+      t.done=false;            // 到点复位为未完成，提醒用户「该做了」
+      changed=true;
+      if(t.alert) alertFired.push(t); else toast('待办提醒：'+t.name);
+    }
+  });
+  if(changed){ saveTodos(); renderTodoList(); renderCardBadge(); }
+  if(alertFired.length) showRemind(alertFired);
+}
+setInterval(checkTodos, 60000);
+checkTodos();
+
 genSparks();
 if('serviceWorker' in navigator){ window.addEventListener('load',()=>{ navigator.serviceWorker.register('sw.js').catch(()=>{}); }); }
 </script>
