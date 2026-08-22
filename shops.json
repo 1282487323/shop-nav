@@ -1,0 +1,281 @@
+{
+  "order": [
+    "工具",
+    "采购订单",
+    "一组",
+    "二组",
+    "四组"
+  ],
+  "groups": {
+    "工具": [
+      {
+        "id": "rmsppmn1wy9h3i",
+        "name": "价格计算",
+        "url": "https://1282487323.github.io/price-calculator/",
+        "num": null,
+        "note": ""
+      },
+      {
+        "id": "rmsppgpdo31fik",
+        "name": "https://us.shein.com/",
+        "url": "https://us.shein.com/user/orders/list?from=navTop",
+        "num": null,
+        "note": ""
+      }
+    ],
+    "采购订单": [
+      {
+        "name": "一组采购订单",
+        "url": "https://www.kdocs.cn/l/ccDGkR5Gf21W",
+        "num": 999,
+        "note": "",
+        "id": "rmspfdg2xz7xzl"
+      },
+      {
+        "name": "二组采购订单",
+        "url": "https://www.kdocs.cn/l/cvWAvLodVMBI",
+        "num": 999,
+        "note": "",
+        "id": "rmspfdg2xxue2o"
+      },
+      {
+        "id": "rmt3qbq86t5oon",
+        "name": "四组采购订单",
+        "url": "https://www.kdocs.cn/l/ctT8mn2ZUawl",
+        "num": null,
+        "note": ""
+      }
+    ],
+    "一组": [
+      {
+        "name": "希音1店·马根生",
+        "url": "https://www.kdocs.cn/l/cpSkwXxVTzRe",
+        "num": 1,
+        "note": "马根生",
+        "id": "rmspfdg2xzap9u"
+      },
+      {
+        "name": "希音3店·ML",
+        "url": "https://www.kdocs.cn/l/cka9d9eozsxU",
+        "num": 3,
+        "note": "ML",
+        "id": "rmspfdg2xhkipa"
+      },
+      {
+        "name": "希音4店·杨晨",
+        "url": "https://www.kdocs.cn/l/cgAwxxNDuylJ",
+        "num": 4,
+        "note": "杨晨",
+        "id": "rmspfdg2xe4lln"
+      },
+      {
+        "name": "希音7店·唐伟卓",
+        "url": "https://www.kdocs.cn/l/cbVsGra6Phyl",
+        "num": 7,
+        "note": "唐伟卓",
+        "id": "rmspfdg2xg4wur"
+      },
+      {
+        "name": "希音8店·张坤",
+        "url": "https://www.kdocs.cn/l/cr2frcLgGjng",
+        "num": 8,
+        "note": "张坤",
+        "id": "rmspfdg2xxevw5"
+      },
+      {
+        "name": "希音9店·沃尔玛加拿大",
+        "url": "https://www.kdocs.cn/l/ckLua0Zz9G4m",
+        "num": 9,
+        "note": "沃尔玛加拿大",
+        "id": "rmspfdg2xeqsfk"
+      },
+      {
+        "name": "希音10店·马迪",
+        "url": "https://www.kdocs.cn/l/ciUBR4z9LusN",
+        "num": 10,
+        "note": "马迪",
+        "id": "rmspfdg2xb36ze"
+      },
+      {
+        "name": "希音11店·王振",
+        "url": "https://www.kdocs.cn/l/ckeYPbLIkH4e",
+        "num": 11,
+        "note": "王振",
+        "id": "rmspfdg2x86lt9"
+      },
+      {
+        "name": "希音12店·买家辉",
+        "url": "https://www.kdocs.cn/l/ch9NJkDeRd0l",
+        "num": 12,
+        "note": "买家辉",
+        "id": "rmspfdg2xiz55n"
+      },
+      {
+        "name": "希音13店·杨画",
+        "url": "https://www.kdocs.cn/l/ciXodJMq9VPt",
+        "num": 13,
+        "note": "杨画",
+        "id": "rmspfdg2x61w3q"
+      },
+      {
+        "name": "希音14店",
+        "url": "https://www.kdocs.cn/l/cpYtgEmez9hf",
+        "num": 14,
+        "note": "",
+        "id": "rmspfdg2xyg7o9"
+      },
+      {
+        "name": "希音15店",
+        "url": "https://www.kdocs.cn/l/cj5CEeNhiG0p",
+        "num": 15,
+        "note": "",
+        "id": "rmspfdg2xpnueg"
+      },
+      {
+        "name": "希音16店",
+        "url": "https://www.kdocs.cn/l/cuNpE3BT8t5E",
+        "num": 16,
+        "note": "",
+        "id": "rmspfdg2x280wg"
+      },
+      {
+        "name": "希音17店",
+        "url": "https://www.kdocs.cn/l/cdIrztAyE9sZ",
+        "num": 17,
+        "note": "",
+        "id": "rmspfdg2xobv40"
+      },
+      {
+        "name": "希音18店",
+        "url": "https://www.kdocs.cn/l/cpTJQJ5tNbXs",
+        "num": 18,
+        "note": "",
+        "id": "rmspfdg2x2grq5"
+      }
+    ],
+    "二组": [
+      {
+        "name": "希音二组1店·丹天奇",
+        "url": "https://www.kdocs.cn/l/cbtvar83NZSd",
+        "num": 1,
+        "note": "丹天奇",
+        "id": "rmspfdg2x0ldjo"
+      },
+      {
+        "name": "希音二组2店·武晋超",
+        "url": "https://www.kdocs.cn/l/cl5KHCsZ54Bi",
+        "num": 2,
+        "note": "武晋超",
+        "id": "rmspfdg2xx5cht"
+      },
+      {
+        "name": "希音二组3店·王家赛",
+        "url": "https://www.kdocs.cn/l/csQPvzjPfzv6",
+        "num": 3,
+        "note": "王家赛",
+        "id": "rmspfdg2xyo0ay"
+      },
+      {
+        "name": "希音二组4店·王才仲",
+        "url": "https://www.kdocs.cn/l/cjKm4rXEkWBE",
+        "num": 4,
+        "note": "王才仲",
+        "id": "rmspfdg2xpj1sd"
+      },
+      {
+        "name": "希音二组5店·聂坤坤",
+        "url": "https://www.kdocs.cn/l/csDcFPslpAca",
+        "num": 5,
+        "note": "聂坤坤",
+        "id": "rmspfdg2xnyh7s"
+      },
+      {
+        "name": "希音二组6店·高金英tk",
+        "url": "https://www.kdocs.cn/l/ckddW3xfNSFA",
+        "num": 6,
+        "note": "高金英tk",
+        "id": "rmspfdg2xrripq"
+      },
+      {
+        "name": "希音二组7店·小磊tk",
+        "url": "https://www.kdocs.cn/l/ckHuH8VvFHH4",
+        "num": 7,
+        "note": "小磊tk",
+        "id": "rmspfdg2xoyu4s"
+      },
+      {
+        "name": "希音二组8店·马天",
+        "url": "https://www.kdocs.cn/l/crqEvNOM3Sq4",
+        "num": 8,
+        "note": "马天",
+        "id": "rmspfdg2xnnjcj"
+      },
+      {
+        "name": "希音二组9店·唐佳明",
+        "url": "https://www.kdocs.cn/l/cbWJGBZp9t1B",
+        "num": 9,
+        "note": "唐佳明",
+        "id": "rmspfdg2x0eh0u"
+      },
+      {
+        "name": "希音二组10店",
+        "url": "https://www.kdocs.cn/l/cvmWqpmYgBxz",
+        "num": 10,
+        "note": "",
+        "id": "rmspfdg2x6yuqg"
+      },
+      {
+        "id": "rmt44spvo13nmj",
+        "name": "希音二组11店",
+        "url": "https://www.kdocs.cn/l/cj0v4CGXfXS2",
+        "num": 11,
+        "note": ""
+      },
+      {
+        "id": "rmt44uafysgabi",
+        "name": "希音二组12店",
+        "url": "https://www.kdocs.cn/l/cba1xLZvwwwT",
+        "num": 12,
+        "note": ""
+      }
+    ],
+    "四组": [
+      {
+        "id": "rmt3q44vyul48m",
+        "name": "希音四组1店",
+        "url": "https://www.kdocs.cn/l/ciGNfoyCCV6i",
+        "num": 1,
+        "note": ""
+      },
+      {
+        "id": "rmt3q5regu3cc1",
+        "name": "希音四组2店",
+        "url": "https://www.kdocs.cn/l/crNQ0zZwFLpN",
+        "num": 2,
+        "note": ""
+      },
+      {
+        "id": "rmt3q76fyivc55",
+        "name": "希音四组3店",
+        "url": "https://www.kdocs.cn/l/cjaXaq56AIJO",
+        "num": 3,
+        "note": ""
+      },
+      {
+        "id": "rmt3q8vrj6mybi",
+        "name": "希音四组4店",
+        "url": "https://www.kdocs.cn/l/cmcBqJfdFWw4",
+        "num": 4,
+        "note": ""
+      },
+      {
+        "id": "rmt44vpv4lx4uv",
+        "name": "希音四组5店",
+        "url": "https://www.kdocs.cn/l/cu4huBS1NvMv",
+        "num": 5,
+        "note": ""
+      }
+    ]
+  },
+  "_v": 1787388774476
+}
