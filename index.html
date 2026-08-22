@@ -855,13 +855,29 @@ function syncShopsFromDOM(g, listEl){
   data.groups[g] = ids.map(id=>map[id]).filter(Boolean);
 }
 
-function toggleManage(){
-  manage=!manage;
-  document.getElementById('mgBtn').classList.toggle('on',manage);
-  if(!manage) groupSort.clear();   // 退出管理模式时关闭所有组内排序状态
-  updateSaveBtn();   // 保存按钮常驻显示，不受管理模式影响，仅同步待保存状态
+/* 退出管理模式并复位所有相关状态（解绑拖拽、清组内排序、复位按钮与样式）。
+   供手动切换、页面卸载/bfcache 复用，保证页面隐藏或重新打开时不残留管理态。 */
+function exitManage(){
+  if(!manage) return;
+  manage=false;
+  groupSort.clear();        // 关闭所有组内排序状态
+  destroySortables();       // 解绑组间/组内拖拽实例
+  document.getElementById('mgBtn').classList.remove('on');
+  document.body.classList.remove('manage');
+  updateSaveBtn();          // 保存按钮常驻，仅同步待保存状态
   render();
 }
+function toggleManage(){
+  if(manage){ exitManage(); return; }
+  manage=true;
+  document.getElementById('mgBtn').classList.add('on');
+  updateSaveBtn();
+  render();
+}
+/* 关闭/切后台/进入 bfcache 时自动退出管理态，避免页面带管理态「复活」 */
+window.addEventListener('pagehide', function(){ exitManage(); });
+/* 从 bfcache 恢复时若仍带管理态则强制退出（pagehide 已清，这里兜底） */
+window.addEventListener('pageshow', function(e){ if(e.persisted) exitManage(); });
 
 /* ---- modal ---- */
 const mask=document.getElementById('mask');
