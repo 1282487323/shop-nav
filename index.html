@@ -67,6 +67,8 @@
   .s-handle{display:none;align-items:center;justify-content:center;color:rgba(45,43,85,.35);font-size:16px;width:22px;flex-shrink:0;cursor:grab;touch-action:none}
   .manage .g-handle{display:flex}
   .grp.sorting .s-handle{display:flex}
+  /* 排序模式下禁用列表内文本选择，避免拖拽时被浏览器自动蓝底选中其他店铺名 */
+  .grp.sorting .list{user-select:none;-webkit-user-select:none}
   .sortable-ghost{opacity:.35;background:rgba(var(--acR),var(--acG),var(--acB),.08)}
   .sortable-chosen{box-shadow:0 2px 16px rgba(var(--acR),var(--acG),var(--acB),.25);border-radius:12px}
   .list{padding:10px 12px 14px;min-height:8px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
@@ -797,15 +799,24 @@ function applyGroupSort(){
     sec.classList.add('sorting');
     const list = sec.querySelector('.list');
     if(list && !list.__sortable){
-      list.__sortable = new Sortable(list, {
-        draggable:'.item', handle:'.s-handle', animation:150, forceFallback:true,
-        filter:'button,input,.ops', preventOnFilter:false,
-        onEnd: function(evt){ syncShopsFromDOM(g, evt.from); markDirty(); }
-      });
+      list.__sortable = createListSortable(list, g);
       sortables.push(list.__sortable);
     }
     const btn = sec.querySelector('.sort-toggle');
     if(btn) btn.textContent = '完成';
+  });
+}
+/* 拖拽开始时清空浏览器选区，避免 forceFallback 模式下文字被蓝底选中 */
+function clearSelection(){
+  try{ const s=window.getSelection && window.getSelection(); if(s) s.removeAllRanges(); }catch(e){}
+}
+/* 统一创建组内 list 的 Sortable 实例，集中维护 onStart/onEnd 钩子，避免多处重复 */
+function createListSortable(list, g){
+  return new Sortable(list, {
+    draggable:'.item', handle:'.s-handle', animation:150, forceFallback:true,
+    filter:'button,input,.ops', preventOnFilter:false,
+    onStart: function(){ clearSelection(); },
+    onEnd: function(evt){ syncShopsFromDOM(g, evt.from); markDirty(); }
   });
 }
 /* 点击组别卡片「排序 / 完成」：只切换该组的条目拖拽 */
@@ -825,11 +836,7 @@ function toggleGroupSort(g){
     groupSort.add(g);
     sec.classList.add('sorting');
     if(list && !list.__sortable){
-      list.__sortable = new Sortable(list, {
-        draggable:'.item', handle:'.s-handle', animation:150, forceFallback:true,
-        filter:'button,input,.ops', preventOnFilter:false,
-        onEnd: function(evt){ syncShopsFromDOM(g, evt.from); markDirty(); }
-      });
+      list.__sortable = createListSortable(list, g);
       sortables.push(list.__sortable);
     }
   }
