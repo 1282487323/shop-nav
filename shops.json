@@ -4,7 +4,8 @@
     "采购订单",
     "一组",
     "二组",
-    "四组"
+    "四组",
+    "三组"
   ],
   "groups": {
     "工具": [
@@ -275,7 +276,30 @@
         "num": 5,
         "note": ""
       }
+    ],
+    "三组": [
+      {
+        "id": "rmt6nrwps9wf99",
+        "name": "希音三组1店",
+        "url": "https://www.kdocs.cn/l/cpNZh2z4yJM2",
+        "num": 1,
+        "note": ""
+      },
+      {
+        "id": "rmt6nsc5dh7kre",
+        "name": "希音三组2店",
+        "url": "https://www.kdocs.cn/l/ccferwhUys5w.",
+        "num": 2,
+        "note": ""
+      },
+      {
+        "id": "rmt6nskrrutyfe",
+        "name": "希音三组3店",
+        "url": "https://www.kdocs.cn/l/cngXRFPMbvlE",
+        "num": 3,
+        "note": ""
+      }
     ]
   },
-  "_v": 1787389043285
+  "_v": 1787541062967
 }
